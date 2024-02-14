@@ -1,21 +1,21 @@
-import { Link, Outlet } from 'umi';
+import { Link, Outlet, history } from 'umi';
+import HeaderComponent from "@/components/header"
 import styles from './index.less';
+import cache from "@/utils/cache";
 
 export default function Layout() {
+  const exitLogin = () => {
+    cache.clearCache();
+    history.replace("/login");
+  }
   return (
     <div className={styles.navs}>
-      <ul>
-        <li>
-          <Link to="/">首页</Link>
-        </li>
-        <li>
-          <Link to="/home">Home</Link>
-        </li>
-        <li>
-          <Link to="/login">登录</Link>
-        </li>
-      </ul>
-      <Outlet />
+      <HeaderComponent title='App Name'>
+        <span className={styles.exitBtn} onClick={exitLogin}>退出</span>
+      </HeaderComponent>
+      <div className={styles.content}>
+        <Outlet />
+      </div>
     </div>
   );
 }

@@ -1,0 +1,88 @@
+.JobCardBox {
+  border: 1px solid #E7EAEE;
+  padding: 15px;
+  border-radius: 3px;
+  width: 358px;
+  height: 265px;
+
+  .JobCardHeader {
+    padding: 0 10px;
+    background-color: #ECF2FF;
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 40px;
+    height: 40px;
+    color: #000;
+    border-radius: 6px;
+  }
+
+  .JobCardContent {
+    padding: 10px 0px;
+    border-bottom: 1px solid #E7EAEE;
+    height: 158px;
+    display: flex;
+    align-items: center;
+    &::after {
+      clear: both;
+      content: "";
+      display: block;
+    }
+
+    .JobCardContentLeft {
+      width: 45%;
+      float: left;
+      .JobCardContentLeftContent {
+        color: #000;
+        margin-bottom: 5px;
+        .JobCardContentLeftContentLabel {
+          font-size: 12px;
+          color: rgba(0,0,0,.4);
+        }
+        
+        .JobCardContentLeftContentLabelContent {
+          font-size: 14px;
+        }
+      }
+    }
+    .JobCardContentRight {
+      width: 55%;
+      float: left;
+      background: #FBFBFB;
+      padding: 12px;
+      border-radius: 6px;
+
+      .JobCardContentRightContent {
+        color: #000;
+        font-size: 14px;
+        font-weight: 500;
+      }
+    }
+  }
+  .JobCardBottom {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    .JobCardBottomLeft {
+      img {
+        cursor: pointer;
+        width: 32px;
+
+        &:last-child {
+          margin-left: 10px;
+        }
+      }
+    }
+
+    .JobCardBottomRight {
+      background: #2B67FF;
+      border-radius: 8px;
+      width: 111px;
+      text-align: center;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 30px;
+      cursor: pointer;
+    }
+  }
+}

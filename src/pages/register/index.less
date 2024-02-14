@@ -1,0 +1,109 @@
+.registerBox {
+  width: 100%;
+  height: 100%;
+  position: relative;
+
+  .registerHeader {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .registerContent {
+    display: flex;
+    height: 100%;
+    box-sizing: border-box;
+
+    .registerContentIcon {
+      width: 240px;
+      position: absolute;
+      bottom: 80px;
+      left: 55%;
+    }
+  }
+
+  .registerLeft {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+    background-color: #ECF2FF;
+
+    .registerLeftContent {
+      width: 55%;
+
+      .registerLeftContentTitleIcon {
+        display: flex;
+        margin-bottom: 80px;
+
+        img {
+          width: 163px;
+        }
+
+        .registerLeftContentTitleIconContent {
+          font-size: 20px;
+          font-weight: 400;
+          line-height: 40px;
+          background: url("@/assets/reactangle.png") 100% 100% no-repeat;
+          background-size: contain;
+          height: 96px;
+          padding: 10px 10px 10px 50px;
+          box-sizing: border-box;
+          align-self: end;
+        }
+      }
+
+      .registerLeftContentTitle {
+        font-size: 44px;
+        font-weight: bold;
+        line-height: 50px;
+      }
+
+      .registerLeftContentSubTitle {
+        font-size: 20px;
+        margin-top: 20px;
+        font-weight: 400;
+      }
+    }
+  }
+  
+  .registerRight{
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .registerRightContent {
+      width: 60%;
+    }
+
+    .registerRightTitle {
+      font-size: 44px;
+      margin-bottom: 50px;
+      font-weight: bold;
+    }
+    
+    .registerSubmit {
+      background: #2B67FF;
+      font-size: 18px;
+      color: #fff;
+      height: 52px;
+      width: 100%;
+    }
+  }
+
+  .registerCommHeight {
+    height: 52px;
+    border-radius: 8px;
+    // margin-bottom: 10px;
+  }
+
+  .registerFormRegister {
+    color: #2B67FF;
+    text-align: right;
+
+    span {
+      cursor: pointer;
+    }
+  }
+}

@@ -1,3 +1,124 @@
-.homeTest {
-  color: red;
+.homeBox {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  
+  .homeLeft {
+    width: 20%;
+    height: 100%;
+    border-right: 1px solid  #E7EAEE;
+    padding: 0 32px;
+    box-sizing: border-box;
+    font-size: 14px;
+    font-weight: 500;
+
+    .homeLeftSearch {
+      height: 80px;
+      text-align: center;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: end;
+
+      img {
+        position: absolute;
+        width: 62px;
+        left: 0;
+        top: 0;
+      }
+
+      .homeCommHeight {
+        width: 93%;
+        background:  #2B67FF;
+        border-radius: 6px;
+        color: #fff;
+        cursor: pointer;
+      }
+    }
+
+    .homeLeftProfile,
+    .homeLeftTitle {
+      padding: 0 10px;
+      height: 44px;
+      line-height: 44px;
+      cursor: pointer;
+    }
+
+    .homeLeftTitle {
+      border: 1px solid #E7EAEE;
+      border-left: 0;
+      border-right: 0;
+    }
+
+    .homeLeftHistory {
+      height: 72%;
+      border-bottom: 1px solid #E7EAEE;
+      min-height: 100px;
+      .homeLeftHistorySub {
+        margin: 4px 0;
+      }
+    }
+
+    .homeLeftLiked {
+      height: 50px;
+      border-bottom: 1px solid #E7EAEE;
+      cursor: pointer;
+
+      .homeLeftLikeSub {
+        img {
+          margin-right: 10px;
+          vertical-align: text-bottom;
+        }
+      }
+    }
+
+    .homeLeftCommonContent {
+      height: calc(100% - 44px);
+      overflow: auto;
+      .homeCommHeight {
+        cursor: pointer;
+        border-radius: 4px;
+
+        &:hover,
+        &.isCurrent {
+          font-weight: 700;
+          background: #F1F1F1;
+        }
+      }
+    }
+  }
+
+  .homeRight {
+    height: 100%;
+    width: 80%;
+    padding: 24px;
+    box-sizing: border-box;
+
+    .homeRightContent {
+      height: calc(100% - 36px);
+      overflow-y: auto;
+      display: flex;
+      flex-wrap: wrap;
+
+      .homeRightContentCard {
+        margin-right: 15px;
+        margin-bottom: 15px;
+      }
+    }
+  }
+
+  .homeCommColor {
+    color: rgba(0,0,0, .4);
+    font-size: 14px;
+  }
+
+  .homeCommHeight {
+    line-height: 36px;
+    height: 36px;
+    padding: 0 10px;
+    box-sizing: border-box;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }

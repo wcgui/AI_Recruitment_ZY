@@ -1,61 +1,121 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Checkbox, Form, Input } from 'antd';
-
-const onFinish = (values: any) => {
-  console.log('Success:', values);
-};
-
-const onFinishFailed = (errorInfo: any) => {
-  console.log('Failed:', errorInfo);
-};
+import classNames from 'classnames';
+import styles from './index.less';
+import HeaderComponent from "@/components/header"
+import { history, useModel } from 'umi';
+import * as LOGIN from '@/api/login';
+import { setToken } from '@/utils/cache';
 
 type FieldType = {
-  username?: string;
+  userName?: string;
   password?: string;
-  remember?: string;
+  [key: string]: any;
 };
+const TitleIcon = require("@/assets/group.png");
+const VectorIcon = require("@/assets/vector.png");
 
-const App: React.FC = () => (
-  <Form
-    name="basic"
-    labelCol={{ span: 8 }}
-    wrapperCol={{ span: 16 }}
-    style={{ maxWidth: 600 }}
-    initialValues={{ remember: true }}
-    onFinish={onFinish}
-    onFinishFailed={onFinishFailed}
-    autoComplete="off"
-  >
-    <Form.Item<FieldType>
-      label="Username"
-      name="username"
-      rules={[{ required: true, message: 'Please input your username!' }]}
-    >
-      <Input />
-    </Form.Item>
+const App: React.FC = () => {
+  const [form] = Form.useForm();
+  const [userData, setUserData] = useState<FieldType>({});
+  const usersInfo = useModel("users");
+  const handleChange = (e: any) => {
+    setUserData({
+      ...userData,
+      [e.target.name]: e.target.value,
+    });
+  };
+  const onFinish = async (values: any) => {
+    let params = {
+      username: userData.userName,
+      password: userData.password,
+      loginType: "password",
+    };
+    const res = await LOGIN.accountLogin(params);
+    
+    usersInfo.setUserInfo(res.data);
+    setToken(res.data?.accessToken);
+    skipPage("/");
+  };
+  const onFinishFailed = (errorInfo: any) => {
+    console.log('Failed:', errorInfo);
+  };
+  const skipPage = (path: string) => {
+    history.replace(path);
+  };
 
-    <Form.Item<FieldType>
-      label="Password"
-      name="password"
-      rules={[{ required: true, message: 'Please input your password!' }]}
-    >
-      <Input.Password />
-    </Form.Item>
+  return (<div className={styles.loginBox}>
+    <HeaderComponent border={false} styleClass={{[styles.loginHeader]: true,}}></HeaderComponent>
+    <div className={styles.loginContent}>
+      <img src={VectorIcon} className={styles.loginContentIcon}/>
+      <div className={styles.loginLeft}>
+        <div className={styles.loginLeftContent}>
+          <div className={styles.loginLeftContentTitleIcon}>
+            <img src={TitleIcon} alt="logo" />
+            <div className={styles.loginLeftContentTitleIconContent}>
+              Hi, I'm your job search assistant xxx.
+            </div>
+          </div>
+          <div className={styles.loginLeftContentTitle}>
+            <span style={{color: "#2B67FF",}}>World's most intelligent</span><br/>
+            <span>
+              job search, <br/>
+              powered by an AI assistant.<br/>
+            </span>
+          </div>
+          <div className={styles.loginLeftContentSubTitle}>
+            Are you still spending hours browsing for jobs?<br/> 
+            Let your AI assistant xxx analyze newly posted jobs and select ones that you have a higher chance of success.
+          </div>
+        </div>
+      </div>
+      <div className={styles.loginRight}>
+        <div className={styles.loginRightContent}>
+          <div className={styles.loginRightTitle}>
+            Sign in
+          </div>
+          <Form
+            name="basic"
+            layout="vertical"
+            onFinish={onFinish}
+            onFinishFailed={onFinishFailed}
+            autoComplete="off"
+            form={form}
+          >
+            <Form.Item label="userName">
+              <Form.Item<FieldType>
+                name="userName"
+                noStyle
+                rules={[{ required: true, message: 'Please input your userName!' }]}
+              >
+                <Input name="userName" className={styles.loginCommHeight} value={userData.userName} onChange={handleChange}/>
+              </Form.Item>
+            </Form.Item>
+            <Form.Item label="Password">
+              <Form.Item<FieldType>
+                name="password"
+                noStyle
+                rules={[{ required: true, message: 'Please input your password!' }]}
+              >
+                <Input.Password name="password" className={styles.loginCommHeight} value={userData.password} onChange={handleChange}/>
+              </Form.Item>
+            </Form.Item>
 
-    <Form.Item<FieldType>
-      name="remember"
-      valuePropName="checked"
-      wrapperCol={{ offset: 8, span: 16 }}
-    >
-      <Checkbox>Remember me</Checkbox>
-    </Form.Item>
-
-    <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-      <Button type="primary" htmlType="submit">
-        Submit
-      </Button>
-    </Form.Item>
-  </Form>
-);
+            <Form.Item className={styles.loginFormRegister}>
+              <span onClick={() => skipPage("/register")}>
+                Sign up
+              </span>
+            </Form.Item>
+            <Form.Item>
+              <Button type="primary" htmlType="submit" className={classNames(styles.loginSubmit,styles.loginCommHeight)}>
+                Get started
+              </Button>
+            </Form.Item>
+          </Form>
+        </div>
+      </div>
+    </div>
+  </div>);
+};
 
 export default App;
