@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+git pull || exit
 npm run build || exit
 export tag=`date "+%Y%m%d%H%M%S"` || exit
 docker build -f Dockerfile -t cc-frontend:${tag} . || exit
