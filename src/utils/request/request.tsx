@@ -29,14 +29,14 @@ function hideLoading () {
 export default (config: any) => {
   // 创建axios实例
   const service: any = axios.create({
-    baseURL: window.location.hostname==='localhost'?'/api':"",
+    baseURL: '/api',
     // 超时
     timeout: config.timeout || 10000,
   });
   // 请求拦截器
   service.interceptors.request.use(
     (config: any) => {
-      config.headers["Authorization"] = getToken();
+      config.headers["Authorization"] = "Bearer " + getToken();
       config.headers["Content-Type"] =
         config.headers["Content-Type"] || "application/json";
       if (!config.headers.noLoading) {

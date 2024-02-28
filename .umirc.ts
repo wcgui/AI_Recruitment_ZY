@@ -10,7 +10,7 @@ export default defineConfig({
   ],
   proxy: {  
     '/api': {
-      target: "http://api.cc.nps.cxhelloworld.com/release/v1/",
+      target: "http://cc.nps.cxhelloworld.com/api/release/v1/",
       changeOrigin: true, // 开启代理  
       pathRewrite: {  
         '^/api': '' // 重定向路径  

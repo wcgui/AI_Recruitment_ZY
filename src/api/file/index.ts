@@ -1,6 +1,6 @@
 import request from "@/utils/request/request";
 // 上传文件
-export const uploadFile = (data: any) => {
+export const uploadFile = (data: any, params?: any) => {
   return request({
     url: "/file/upload",
     method: "post",
@@ -8,6 +8,7 @@ export const uploadFile = (data: any) => {
       "Content-Type": "multipart/form-data",
     },
     data,
+    params,
   });
 };
 

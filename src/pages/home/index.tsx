@@ -2,6 +2,7 @@ import React, { useEffect, useState} from 'react';
 import { Empty, Drawer } from "antd";
 import JobCard, { OperateType } from '@/components/job-card';
 import * as Home from "@/api/home";
+import { history } from 'umi';
 import './index.less';
 const LikeIcon = require('@/assets/like.png');
 const GroupIcon = require('@/assets/group.png');
@@ -10,9 +11,13 @@ enum LookType {
   liked = 1,
   history = 2,
 }
+const pageParams = {
+  page: 1,
+  pageSize: 1000,
+};
 
 const App: React.FC = () => {
-  const [history, setHistory] = useState<any>([]);
+  const [historyData, setHistoryData] = useState<any>([]);
   const [likedHistory, setLikedHistory] = useState([]);
   const [detailsData, setDetailsData] = useState<any>({});
   const [current, setCurrent] = useState({
@@ -29,11 +34,16 @@ const App: React.FC = () => {
 
   //获取历史列表数据
   const getHistoryList = () => {
-    Home.getHistoryList().then((res: any) => {
-      setHistory(res?.data?.list || []);
+    Home.getHistoryList({...pageParams}).then((res: any) => {
+      let array = res?.data?.list || [];
+
+      if (!array.length) {
+        history.push("/upload");
+      }
+      setHistoryData(array);
     })
     .catch(() => {
-      setHistory([]);
+      setHistoryData([]);
     });
   };
   //获取点赞列表数据
@@ -47,7 +57,7 @@ const App: React.FC = () => {
   //获取点赞列表数据
   const getCecommendHistory = () => {
     let params = {
-      seqId: history[current.index]?.seqId,
+      seqId: historyData[current.index]?.seqId,
     }
     Home.getCecommendHistory(params).then((res: any) => {
       setLikedHistory(res?.data?.list || []);
@@ -106,7 +116,7 @@ const App: React.FC = () => {
           </div>
           <div className='homeLeftCommonContent'>
             {
-              history.length ? history.map((item: any, index: number) => {
+              historyData.length ? historyData.map((item: any, index: number) => {
                 return <div className='homeCommHeight' key={index} onClick={() => lookDataList(LookType.history, index)}>
                   {item.createdTime}
                 </div>

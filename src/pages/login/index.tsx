@@ -8,7 +8,7 @@ import * as LOGIN from '@/api/login';
 import { setToken } from '@/utils/cache';
 
 type FieldType = {
-  userName?: string;
+  email?: string;
   password?: string;
   [key: string]: any;
 };
@@ -27,9 +27,9 @@ const App: React.FC = () => {
   };
   const onFinish = async (values: any) => {
     let params = {
-      username: userData.userName,
+      email: userData.email,
       password: userData.password,
-      loginType: "password",
+      loginType: "email_with_password",
     };
     const res = await LOGIN.accountLogin(params);
     
@@ -82,13 +82,13 @@ const App: React.FC = () => {
             autoComplete="off"
             form={form}
           >
-            <Form.Item label="userName">
+            <Form.Item label="email">
               <Form.Item<FieldType>
-                name="userName"
+                name="email"
                 noStyle
-                rules={[{ required: true, message: 'Please input your userName!' }]}
+                rules={[{ required: true, message: 'Please input your email!' }]}
               >
-                <Input name="userName" className={styles.loginCommHeight} value={userData.userName} onChange={handleChange}/>
+                <Input name="email" className={styles.loginCommHeight} value={userData.email} onChange={handleChange}/>
               </Form.Item>
             </Form.Item>
             <Form.Item label="Password">

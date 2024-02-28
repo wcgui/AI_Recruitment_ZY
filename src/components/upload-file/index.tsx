@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { InboxOutlined } from '@ant-design/icons';
 import type { UploadProps } from 'antd';
 import { Upload } from 'antd';
-import { generateRandomString } from "@/utils/util";
+import { generateRandomString, exportApiFile } from "@/utils/util";
 import { useModel } from 'umi';
 import * as FileApi from "@/api/file";
 type Props = {
@@ -19,11 +19,16 @@ const App: React.FC<Props> = (prop) => {
     onChange(info) {
       const formData = new FormData(),
         file = info.file;
-      let arr = file?.name?.split(".");
+      // let arr = file?.name?.split(".");
       
       formData.append("file", file as any);
-      formData.append("fileKey", "cos-" + usersInfo.userInfo?.userId + "/" + generateRandomString(24) + "." + arr[arr.length - 1]);
-      FileApi.uploadFile(formData).then((res: any) => {
+      // formData.append("fileKey", "cos-" + usersInfo.userInfo?.userId + "/" + generateRandomString(24) + "." + arr[arr.length - 1]);
+      FileApi.uploadFile(formData, {fileType: prop.fileType || "RESUME"}).then((res: any) => {
+        info.fileList[info.fileList.length - 1] = {
+          ...info.fileList[info.fileList.length - 1],
+          status: "done",
+          fileKey: res.data,
+        }
         setFileList([info.fileList[info.fileList.length - 1]]);
         prop.successBack && prop.successBack(res.data);
       })
@@ -32,12 +37,17 @@ const App: React.FC<Props> = (prop) => {
       });
     },
     showUploadList: {
-      showDownloadIcon: true,
+      // showDownloadIcon: true,
       downloadIcon: 'Download',
       showRemoveIcon: false,
     },
     beforeUpload: () => {
       return false;
+    },
+    onDownload: (file: any) => {
+      FileApi.downloadFile({fileKey: file.fileKey}).then((res: any) => {
+        exportApiFile(res, file.name);
+      });
     },
     fileList,
   };
