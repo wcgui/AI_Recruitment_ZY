@@ -29,7 +29,7 @@ function hideLoading () {
 export default (config: any) => {
   // 创建axios实例
   const service: any = axios.create({
-    baseURL: '/api',
+    baseURL: window.location.hostname==='localhost' ? '/api' : "/api/release/v1",
     // 超时
     timeout: config.timeout || 10000,
   });
