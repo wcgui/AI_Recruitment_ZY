@@ -57,7 +57,9 @@ const App: React.FC = () => {
   //获取点赞列表数据
   const getRecommendJobs = () => {
     let params = {
-      seqId: historyData[current.index]?.seqId,
+      page: 1,
+      pageSize: 1000,
+      taskId: historyData[current.index]?.taskId,
     }
     Home.getRecommendJobs(params).then((res: any) => {
       setLikedHistory(res?.data?.list || []);
