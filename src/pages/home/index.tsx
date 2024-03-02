@@ -55,11 +55,11 @@ const App: React.FC = () => {
     });
   };
   //获取点赞列表数据
-  const getCecommendHistory = () => {
+  const getRecommendJobs = () => {
     let params = {
       seqId: historyData[current.index]?.seqId,
     }
-    Home.getCecommendHistory(params).then((res: any) => {
+    Home.getRecommendJobs(params).then((res: any) => {
       setLikedHistory(res?.data?.list || []);
     })
     .catch(() => {
@@ -72,7 +72,7 @@ const App: React.FC = () => {
     setCurrent({type, index: index || 0});
 
     if (type == LookType.history) {
-      getCecommendHistory();
+      getRecommendJobs();
     } else if (type == LookType.liked) {
       getFavourites();
     }

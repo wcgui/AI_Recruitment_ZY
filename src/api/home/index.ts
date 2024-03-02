@@ -36,9 +36,9 @@ export const getJobDetail = (params: any) => {
 };
 
 //加载历史数据列表
-export const getCecommendHistory = (params: any) => {
+export const getRecommendJobs = (params: any) => {
   return request({
-    url: "/jobs/get_recommend_history",
+    url: "/jobs/get_recommend_jobs",
     method: "get",
     params,
   });
@@ -47,7 +47,7 @@ export const getCecommendHistory = (params: any) => {
 //加载历史数据列表
 export const getHistoryList = (params?: any) => {
   return request({
-    url: "/jobs/get_history_list",
+    url: "/jobs/get_recommend_history_list",
     method: "get",
     params,
   });
