@@ -1,5 +1,11 @@
 
 import { checkMobilePhone, isEmail } from "@/utils/validate";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+
+dayjs.extend(utc);
+
+const DATE_TIME_FORMAT = "YYYY-MM-DD HH:mm:ss";
 
 //手机号校验
 export const checkMobilePhoneRule = (rule: any, value: any) => {
@@ -32,7 +38,7 @@ export const generateRandomString = (length: any) => {
   return result;  
 } 
 
-export const exportApiFile = (content: any, fileName = "导出数据.xlsx") => {
+export const exportApiFile = (content: any, fileName = "exportData.xlsx") => {
   const blob = new Blob([content]);
   if ("download" in document.createElement("a")) {
     // 非IE下载
@@ -49,3 +55,11 @@ export const exportApiFile = (content: any, fileName = "导出数据.xlsx") => {
     navigator?.msSaveBlob(blob, fileName);
   }
 };
+
+export function formatUtcString(
+  utcString: string,
+  format: string = DATE_TIME_FORMAT,
+  utc: number = 0,
+) {
+  return dayjs.utc(utcString).utcOffset(utc).format(format);
+}

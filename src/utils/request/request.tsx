@@ -12,7 +12,7 @@ function showLoading () {
       var dom = document.createElement('div');
       dom.setAttribute('id', 'loading');
       document.body.appendChild(dom);
-      let spinDom = <Spin tip="加載中..." size="large"/>;
+      let spinDom = <Spin tip="loading..." size="large"/>;
       ReactDOM.render(spinDom, dom)
   }
   requestCount++;
@@ -61,7 +61,7 @@ export default (config: any) => {
         code == "D0003" ||
         code == "D0006"
       ) {
-        message.error("登录状态已过期，请重新登录");
+        message.error("Login status has expired. Please log in again");
         setToken("");
         history.push("/login");
       }  else if (code !== 200) {

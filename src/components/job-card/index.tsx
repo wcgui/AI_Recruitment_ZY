@@ -3,6 +3,7 @@ import { Rate } from 'antd';
 import styles from './index.less';
 import className from "classnames";
 import * as Home from "@/api/home";
+import * as Utils from "@/utils/util";
 
 //当前操作方式
 export enum OperateType {
@@ -57,8 +58,11 @@ const JobCard: React.FC<Props> = (prop) => {
       label: "Job title"
     },
     {
-      key: "postedTimestampUtc",
-      label: "Post time"
+      key: "jobPostTime",
+      label: "Post time",
+      customValue: (value: any, item?: any) => {
+        return Utils.formatUtcString(value);
+      },
     },
   ];
   const showRightOptions = [
@@ -87,7 +91,7 @@ const JobCard: React.FC<Props> = (prop) => {
             return (
               <div className={styles.JobCardContentLeftContent} key={key}>
                 <div className={styles.JobCardContentLeftContentLabel}>{item.label}:</div>
-                <div className={className("overflow", styles.JobCardContentLeftContentLabelContent)} title={cardData[item.key]}>{cardData[item.key] || "--"}</div>
+                <div className={className("overflow", styles.JobCardContentLeftContentLabelContent)} title={cardData[item.key]}>{item.customValue && item.customValue(cardData[item.key]) || cardData[item.key] || "--"}</div>
               </div>);
           })
         }

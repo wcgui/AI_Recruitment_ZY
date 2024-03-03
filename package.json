@@ -12,6 +12,7 @@
     "antd": "^5.12.2",
     "axios": "^1.6.7",
     "classnames": "^2.5.1",
+    "dayjs": "^1.11.10",
     "umi": "^4.0.89"
   },
   "devDependencies": {

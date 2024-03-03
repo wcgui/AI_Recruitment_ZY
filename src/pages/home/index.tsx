@@ -1,8 +1,10 @@
-import React, { useEffect, useState} from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Empty, Drawer } from "antd";
 import JobCard, { OperateType } from '@/components/job-card';
+import classNames from 'classnames';
 import * as Home from "@/api/home";
 import { history } from 'umi';
+import * as Utils from "@/utils/util";
 import './index.less';
 const LikeIcon = require('@/assets/like.png');
 const GroupIcon = require('@/assets/group.png');
@@ -17,7 +19,7 @@ const pageParams = {
 };
 
 const App: React.FC = () => {
-  const [historyData, setHistoryData] = useState<any>([]);
+  const historyData = useRef<any>([]);
   const [likedHistory, setLikedHistory] = useState([]);
   const [detailsData, setDetailsData] = useState<any>({});
   const [current, setCurrent] = useState({
@@ -33,17 +35,20 @@ const App: React.FC = () => {
   };
 
   //获取历史列表数据
-  const getHistoryList = () => {
+  const getHistoryList = (bool: boolean = false) => {
     Home.getHistoryList({...pageParams}).then((res: any) => {
       let array = res?.data?.list || [];
 
       if (!array.length) {
         history.push("/upload");
       }
-      setHistoryData(array);
+      historyData.current = array;
+      if (bool) {
+        lookDataList(LookType.history, 0);
+      }
     })
     .catch(() => {
-      setHistoryData([]);
+      historyData.current = [];
     });
   };
   //获取点赞列表数据
@@ -52,6 +57,7 @@ const App: React.FC = () => {
       setLikedHistory(res?.data?.list || []);
     })
     .catch(() => {
+      setLikedHistory([]);
     });
   };
   //获取点赞列表数据
@@ -59,14 +65,16 @@ const App: React.FC = () => {
     let params = {
       page: 1,
       pageSize: 1000,
-      taskId: historyData[current.index]?.taskId,
+      taskId: historyData.current[current.index]?.taskId,
     }
-    Home.getRecommendJobs(params).then((res: any) => {
-      setLikedHistory(res?.data?.list || []);
-    })
-    .catch(() => {
-      setLikedHistory([]);
-    });
+    if (params.taskId) {
+      Home.getRecommendJobs(params).then((res: any) => {
+        setLikedHistory(res?.data?.jobVos?.list || []);
+      })
+      .catch(() => {
+        setLikedHistory([]);
+      });
+    }
   };
 
   //点击当前操作模式
@@ -98,7 +106,7 @@ const App: React.FC = () => {
   }
 
   useEffect(() => {
-    getHistoryList();
+    getHistoryList(true);
   }, []);
   return (
     <div className='homeBox'>
@@ -118,9 +126,9 @@ const App: React.FC = () => {
           </div>
           <div className='homeLeftCommonContent'>
             {
-              historyData.length ? historyData.map((item: any, index: number) => {
-                return <div className='homeCommHeight' key={index} onClick={() => lookDataList(LookType.history, index)}>
-                  {item.createdTime}
+              historyData.current.length ? historyData.current.map((item: any, index: number) => {
+                return <div className={classNames('homeCommHeight', current.index == index ? 'isCurrent' : '')} key={index} onClick={() => lookDataList(LookType.history, index)}>
+                  {Utils.formatUtcString(item.createdTime)}
                 </div>
               }) :
               <Empty
@@ -166,7 +174,7 @@ const App: React.FC = () => {
           open={open}
           width="50%"
         >
-          <div dangerouslySetInnerHTML={{ __html: detailsData.detailRichText }}></div>
+          <div dangerouslySetInnerHTML={{ __html: detailsData.jobDescription }}></div>
         </Drawer>
       </div>
     </div>
