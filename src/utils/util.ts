@@ -1,4 +1,3 @@
-
 import { checkMobilePhone, isEmail } from "@/utils/validate";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
@@ -9,7 +8,6 @@ const DATE_TIME_FORMAT = "YYYY-MM-DD HH:mm:ss";
 
 //手机号校验
 export const checkMobilePhoneRule = (rule: any, value: any) => {
-
   if (!value || checkMobilePhone(value)) {
     return Promise.resolve();
   } else {
@@ -19,7 +17,6 @@ export const checkMobilePhoneRule = (rule: any, value: any) => {
 
 //手机号校验
 export const checkEmailRule = (rule: any, value: any) => {
-
   if (!value || isEmail(value)) {
     return Promise.resolve();
   } else {
@@ -28,15 +25,16 @@ export const checkEmailRule = (rule: any, value: any) => {
 };
 
 //获取随机字符串
-export const generateRandomString = (length: any) => {  
-  let result = '';  
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';  
-  const charactersLength = characters.length;  
-  for (let i = 0; i < length; i++) {  
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));  
-  }  
-  return result;  
-} 
+export const generateRandomString = (length: any) => {
+  let result = "";
+  const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  const charactersLength = characters.length;
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+};
 
 export const exportApiFile = (content: any, fileName = "exportData.xlsx") => {
   const blob = new Blob([content]);
@@ -59,7 +57,7 @@ export const exportApiFile = (content: any, fileName = "exportData.xlsx") => {
 export function formatUtcString(
   utcString: string,
   format: string = DATE_TIME_FORMAT,
-  utc: number = 0,
+  utc: number = 8
 ) {
   return dayjs.utc(utcString).utcOffset(utc).format(format);
 }

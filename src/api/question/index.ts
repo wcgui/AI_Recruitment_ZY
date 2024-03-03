@@ -9,10 +9,10 @@ export const getInteractiveAsk = (params: any) => {
 };
 
 // 回答问题
-export const interactiveAnswer = (params: any) => {
+export const interactiveAnswer = (data: any) => {
   return request({
     url: "/interactive/answer",
-    method: "get",
-    params,
+    method: "post",
+    data,
   });
 };

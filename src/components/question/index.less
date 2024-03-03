@@ -1,0 +1,48 @@
+.QuestionBox {
+  width: 700px;
+  margin: 20px auto 0;
+
+  .QuestionHeader {
+    display: flex;
+    justify-content: space-between;
+
+    .QuestionHeaderIcon {
+      // position: absolute;
+      width: 62px;
+      // left: 0;
+      // top: 0;
+    }
+
+    .QuestionHeaderTitle {
+      margin-top: 30px;
+      width: calc(100% - 132px);
+      color: #000;
+      background: #ECF2FF;
+      padding: 16px;
+      border-radius: 0px 8px 8px 8px;
+      position: relative;
+
+      &::after {
+        position: absolute;
+        top: 0;
+        left: -20px;
+        width: 0;
+        height: 0;
+        content: "";
+        display: block;
+        border-left: 20px solid transparent;   /* 左边 */  
+        border-right: 20px solid transparent;  /* 右边 */  
+        border-top: 20px solid #ECF2FF;
+      }
+    }
+  }
+
+  .QuestionContent {
+    margin: 20px 0;
+
+  }
+
+  .QuestionFooter {
+    text-align: right;
+  }
+}

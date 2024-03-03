@@ -20,7 +20,7 @@ export const accountRegister = (data: any) => {
 // 获取用户信息
 export const getUserInfo = (params?: any) => {
   return request({
-    url: "/auth/getUser",
+    url: "/user/info",
     method: "get",
     params,
   });

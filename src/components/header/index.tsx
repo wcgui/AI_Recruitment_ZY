@@ -1,5 +1,5 @@
-import React from 'react';
-import styles from './index.less';
+import React from "react";
+import styles from "./index.less";
 import className from "classnames";
 
 const defaultPng = require("@/assets/yay.jpg");
@@ -9,9 +9,19 @@ type Props = {
   border?: boolean; //是否展示横线
   [key: string]: any;
 };
-const Header: React.FC<Props> = ({title = "App name", imgUrl = defaultPng, border = true, styleClass, children}) => (
-  <div className={className(styles.header, styleClass)} style={{borderBottom: border ? '1px solid  #E7EAEE' : ''}}>
-    <div>
+const Header: React.FC<Props> = ({
+  title = "App name",
+  imgUrl = defaultPng,
+  border = true,
+  styleClass,
+  children,
+  logoClick,
+}) => (
+  <div
+    className={className(styles.header, styleClass)}
+    style={{ borderBottom: border ? "1px solid  #E7EAEE" : "" }}
+  >
+    <div onClick={() => logoClick && logoClick()} style={{ cursor: "pointer" }}>
       {imgUrl && <img src={imgUrl} alt="logo" className={styles.headerLogo} />}
       <span className={styles.headerTitle}>{title}</span>
     </div>

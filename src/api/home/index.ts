@@ -61,3 +61,12 @@ export const getFavourites = (params?: any) => {
     params,
   });
 };
+
+//取消点赞
+export const revokeLikeJob = (params?: any) => {
+  return request({
+    url: "/jobs/job_revoke_like",
+    method: "get",
+    params,
+  });
+};
