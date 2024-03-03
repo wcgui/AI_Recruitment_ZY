@@ -64,7 +64,7 @@ const App: React.FC<{
             label={item.label}
             rules={[
               {
-                required: true || item?.params?.required || false,
+                required: item?.params?.required || false,
                 message: "This field is required",
               },
             ]}
