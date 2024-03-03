@@ -17,11 +17,11 @@ export const accountRegister = (data: any) => {
   });
 };
 
-// 账号注册
-export const getUserInfo = (data?: any) => {
+// 获取用户信息
+export const getUserInfo = (params?: any) => {
   return request({
     url: "/auth/getUser",
     method: "get",
-    data,
+    params,
   });
 };

@@ -22,7 +22,7 @@ const App: React.FC = () => {
   const historyData = useRef<any>([]);
   const [likedHistory, setLikedHistory] = useState([]);
   const [detailsData, setDetailsData] = useState<any>({});
-  const [current, setCurrent] = useState({
+  const currentSelect = useRef({
     index: 0,
     type: LookType.history,
   });
@@ -65,7 +65,7 @@ const App: React.FC = () => {
     let params = {
       page: 1,
       pageSize: 1000,
-      taskId: historyData.current[current.index]?.taskId,
+      taskId: historyData.current[currentSelect.current.index]?.taskId,
     }
     if (params.taskId) {
       Home.getRecommendJobs(params).then((res: any) => {
@@ -79,7 +79,7 @@ const App: React.FC = () => {
 
   //点击当前操作模式
   const lookDataList = (type: LookType, index?: number) => {
-    setCurrent({type, index: index || 0});
+    currentSelect.current = {type, index: index || 0};
 
     if (type == LookType.history) {
       getRecommendJobs();
@@ -127,7 +127,7 @@ const App: React.FC = () => {
           <div className='homeLeftCommonContent'>
             {
               historyData.current.length ? historyData.current.map((item: any, index: number) => {
-                return <div className={classNames('homeCommHeight', current.index == index ? 'isCurrent' : '')} key={index} onClick={() => lookDataList(LookType.history, index)}>
+                return <div className={classNames('homeCommHeight', currentSelect.current.index == index ? 'isCurrent' : '')} key={index} onClick={() => lookDataList(LookType.history, index)}>
                   {Utils.formatUtcString(item.createdTime)}
                 </div>
               }) :
