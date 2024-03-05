@@ -53,6 +53,7 @@ const App: React.FC = () => {
   };
   const onQuClose = () => {
     setOpenQuestion(false);
+    getHistoryList();
   };
 
   //获取历史列表数据
