@@ -3,6 +3,8 @@ import styles from "./index.less";
 import className from "classnames";
 import FormItem from "@/components/form-item";
 import * as QuestionApi from "@/api/question";
+import * as HomeApi from "@/api/home";
+import { useModel } from "umi";
 import { Button, Progress } from "antd";
 
 const GroupIcon = require("@/assets/group.png");
@@ -14,6 +16,7 @@ type Props = {
   [key: string]: any;
 };
 const Question: React.FC<Props> = (prop) => {
+  const usersInfo = useModel("users");
   let {
     subtitle = "I've gotten to know you, and now please tell me what kind of positions you are looking for.",
     submitTitle = "Got it！And now I'm working hard to find positions that suit you. Please wait a moment…",
@@ -64,15 +67,15 @@ const Question: React.FC<Props> = (prop) => {
     });
     setIsSubmit(true);
     percent.current = 89;
-    QuestionApi.interactiveAnswer(params)
-      .then((res: any) => {
-        formData.current = {};
-        setIsSubmit(false);
-        prop?.searchSuccess && prop?.searchSuccess();
-      })
-      .catch(() => {
-        setIsSubmit(false);
-      });
+    try {
+      await QuestionApi.interactiveAnswer(params);
+      formData.current = {};
+      setIsSubmit(false);
+      await HomeApi.recommendJobs({ resumeId: usersInfo.userInfo?.mainResumeId });
+      prop?.searchSuccess && prop?.searchSuccess();
+    } catch {
+      setIsSubmit(false);
+    };
   };
 
   useEffect(() => {

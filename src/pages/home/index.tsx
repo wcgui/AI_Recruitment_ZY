@@ -53,7 +53,6 @@ const App: React.FC = () => {
   };
   const onQuClose = () => {
     setOpenQuestion(false);
-    getHistoryList();
   };
 
   //获取历史列表数据
@@ -72,16 +71,22 @@ const App: React.FC = () => {
       })
       .catch(() => {
         historyData.current = [];
+      }).
+      finally(() => {
+        onQuClose();
       });
   };
   //获取点赞列表数据
   const getFavourites = () => {
-    Home.getFavourites()
+    let params = {
+      page: pageParamsData.current.current,
+      pageSize: pageParamsData.current.pageSize,
+    };
+    Home.getFavourites(params)
       .then((res: any) => {
         let array = res?.data?.list || [];
         setLikedHistory(array);
-        pageParamsData.current.total = array.length;
-        setProgressInfo(res?.data?.progressInfo || defaultNoData);
+        pageParamsData.current.total = res?.data?.total || 0;
       })
       .catch(() => {
         setLikedHistory([]);
@@ -139,6 +144,10 @@ const App: React.FC = () => {
     let currentData: any = likedHistory[index];
 
     if ([OperateType.like, OperateType.unlike].includes(type)) {
+      if (currentSelect.current.type == LookType.liked) {
+        getFavourites();
+        return;
+      }
       currentData.like = !currentData.like;
       likedHistory[index] = currentData;
       setLikedHistory([...likedHistory]);
@@ -179,6 +188,7 @@ const App: React.FC = () => {
                     )}
                     key={index}
                     onClick={() => lookDataList(LookType.history, index)}
+                    title={Utils.formatUtcString(item.createdTime)}
                   >
                     {Utils.formatUtcString(item.createdTime)}
                   </div>
@@ -263,7 +273,7 @@ const App: React.FC = () => {
             <Question
               subtitle="please tell me what kind of positions you are looking for."
               submitTitle="Got it！And now I'm working hard to find positions that suit you. Please wait a moment… You can close the chat and check the result later on home page."
-              searchSuccess={onQuClose}
+              searchSuccess={getHistoryList}
             ></Question>
           )}
         </Drawer>

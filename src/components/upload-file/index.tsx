@@ -30,6 +30,11 @@ const App: React.FC<Props> = (prop) => {
             status: "done",
             fileKey: res.data,
           };
+          usersInfo.setUserInfo(
+            {
+              ...usersInfo.userInfo,
+              mainResumeId: res?.data || "",
+            });
           setFileList([info.fileList[info.fileList.length - 1]]);
           prop.successBack && prop.successBack(info.fileList);
           message.success("Upload successfully.");

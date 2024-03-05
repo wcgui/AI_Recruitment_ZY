@@ -3,7 +3,6 @@ import { history } from "umi";
 import UploadFile from "@/components/upload-file";
 import Question from "@/components/question";
 import * as FileApi from "@/api/file";
-import * as HomeApi from "@/api/home";
 import { Button, message } from "antd";
 import "./index.less";
 const App: React.FC = () => {
@@ -38,8 +37,6 @@ const App: React.FC = () => {
 
   //搜索成功回调
   const searchSuccess = async () => {
-    await HomeApi.recommendJobs({ resumeId: fileList[0]?.fileKey });
-
     history.push("/");
   };
 
