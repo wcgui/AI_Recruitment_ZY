@@ -27,17 +27,18 @@ const JobCard: React.FC<Props> = (prop) => {
   const operateFun = async (type: OperateType) => {
     let reqFunc = null,
       params = {
+        taskId: cardData.taskId,
         jobId: cardData.jobId,
       },
       data = {};
     if (type == OperateType.like) {
       reqFunc = Home.likeJob;
     } else if (type == OperateType.unlike) {
-      reqFunc = Home.unLikeJob;
+      reqFunc = Home.revokeLikeJob;
     } else if (type == OperateType.details) {
       reqFunc = Home.getJobDetail;
     } else if (type == OperateType.delete) {
-      reqFunc = Home.revokeLikeJob;
+      reqFunc = Home.unLikeJob;
     }
     if (reqFunc) {
       const res = await reqFunc(params);
