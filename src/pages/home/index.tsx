@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Empty, Drawer, Pagination } from "antd";
+import { Empty, Drawer, Pagination, Button } from "antd";
 import JobCard, { OperateType } from "@/components/job-card";
 import Question from "@/components/question";
 import * as Home from "@/api/home";
@@ -160,6 +160,13 @@ const App: React.FC = () => {
     }
   };
 
+  //跳转外部连接
+  const skipPage = (url: string) => {
+    if (url) {
+      window.open(url);
+    }
+  };
+
   useEffect(() => {
     getHistoryList(true);
   }, []);
@@ -258,9 +265,16 @@ const App: React.FC = () => {
           open={open}
           width="50%"
         >
-          <div
-            dangerouslySetInnerHTML={{ __html: detailsData.jobDescription }}
-          ></div>
+          <div className="homeDetailsBox">
+          <div className="homeDetailsContent">
+            <div
+              dangerouslySetInnerHTML={{ __html: detailsData.jobDescription }}
+            ></div>
+          </div>
+          <div className="homeDetailsBtn">
+            <Button type="primary" onClick={() => skipPage(detailsData.jobUrl)}>Go To Apply</Button>
+          </div>
+          </div>
         </Drawer>
         <Drawer
           title="Search for suitable jobs"
