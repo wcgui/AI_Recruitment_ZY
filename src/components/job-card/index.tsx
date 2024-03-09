@@ -129,15 +129,15 @@ const JobCard: React.FC<Props> = (prop) => {
       },
       {
         key: "jobType",
-        label: "",
+        label: "Job Type",
         styleClass: "ellipsis-multiline2",
-        isNoDefault: true,//是否不展示默认值
+        // isNoDefault: true,//是否不展示默认值
       },
       {
         key: "remoteStatus",
-        label: "",
+        label: "Remote/Onsite",
         styleClass: "ellipsis-multiline2",
-        isNoDefault: true,//是否不展示默认值
+        // isNoDefault: true,//是否不展示默认值
       },
     ],
     [
