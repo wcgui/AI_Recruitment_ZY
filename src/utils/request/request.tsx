@@ -56,10 +56,7 @@ export default (config: any) => {
         hideLoading();
       }
       if (
-        code == "D0005" ||
-        code == "D0104" ||
-        code == "D0003" ||
-        code == "D0006"
+        code == "403"
       ) {
         message.error("Login status has expired. Please log in again");
         setToken("");
