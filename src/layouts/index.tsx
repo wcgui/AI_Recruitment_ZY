@@ -6,7 +6,7 @@ import styles from "./index.less";
 import cache from "@/utils/cache";
 
 export default function Layout() {
-  const usersInfo = "Hello " + useModel("users");
+  const usersInfo = useModel("users");
   const dopdownData = [
     {
       key: "exit",
@@ -27,7 +27,7 @@ export default function Layout() {
       <HeaderComponent title="Saladjobs" logoClick={() => history.replace("/")}>
         <Dropdown menu={{ items: dopdownData, onClick: dropClick }}>
           <Space>
-            {usersInfo.userInfo.email}
+            {"Hi" + usersInfo.userInfo.email}
             <DownOutlined />
           </Space>
         </Dropdown>
