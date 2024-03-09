@@ -33,12 +33,11 @@ const Question: React.FC<Props> = (prop) => {
   const getInteractiveAsk = () => {
     let params = new URLSearchParams(),
       questionKey = [
-        "industries",
-        "emerging_areas",
-        "job_titles",
-        "experiecnce_levels",
-        "remote_statuses",
-        "job_types",
+        "title",
+        "industry",
+        "experience_level",
+        "location",
+        "post_time"
       ];
 
     questionKey.forEach((item) => {
