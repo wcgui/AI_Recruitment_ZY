@@ -76,7 +76,7 @@ const App: React.FC = () => {
             autoComplete="off"
             form={form}
           >
-            <Form.Item label="userName">
+            <Form.Item label="UserName">
               <Form.Item<FieldType>
                 name="userName"
                 noStyle
@@ -85,7 +85,7 @@ const App: React.FC = () => {
                 <Input name="userName" className={styles.registerCommHeight} value={userData.userName} onChange={handleChange}/>
               </Form.Item>
             </Form.Item>
-            <Form.Item label="email">
+            <Form.Item label="Email">
               <Form.Item<FieldType>
                 name="email"
                 noStyle
@@ -98,7 +98,7 @@ const App: React.FC = () => {
                 <Input name="email" className={styles.registerCommHeight} value={userData.email} onChange={handleChange}/>
               </Form.Item>
             </Form.Item>
-            <Form.Item label="phoneNumber">
+            <Form.Item label="PhoneNumber">
               <Form.Item<FieldType>
                 name="phoneNumber"
                 noStyle
