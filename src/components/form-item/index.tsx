@@ -64,7 +64,7 @@ const App: React.FC<{
             label={item.label}
             rules={[
               {
-                required: item?.params?.required || false,
+                required: item?.required || false,
                 message: "This field is required",
               },
             ]}
@@ -72,7 +72,7 @@ const App: React.FC<{
           >
             {item.input == FormItemType.Text && (
               <Input
-                placeholder="placeholder"
+                placeholder={item.placeHolder}
                 value={formData.current[item.questionKey]}
                 {...item.params}
                 onChange={(e) =>
@@ -82,7 +82,7 @@ const App: React.FC<{
             )}
             {item.input == FormItemType.Selector && (
               <Select
-                placeholder="placeholder"
+                placeholder={item.placeHolder}
                 value={formData.current[item.questionKey]}
                 {...item.params}
                 onChange={(e) => handleChange(item.questionKey, e)}
@@ -96,7 +96,7 @@ const App: React.FC<{
             )}
             {item.input == FormItemType.DataPicker && (
               <DatePicker
-                placeholder="placeholder"
+                placeholder={item.placeHolder}
                 value={formData.current[item.questionKey]}
                 {...item.params}
                 onChange={(date: any, dateString: string) =>
@@ -106,7 +106,7 @@ const App: React.FC<{
             )}
             {item.input == FormItemType.TextArea && (
               <Input.TextArea
-                placeholder="placeholder"
+                placeholder={item.placeHolder}
                 showCount
                 value={formData.current[item.questionKey]}
                 {...item.params}

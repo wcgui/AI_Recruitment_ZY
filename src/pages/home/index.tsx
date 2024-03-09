@@ -33,7 +33,7 @@ const App: React.FC = () => {
   const [detailsData, setDetailsData] = useState<any>({});
   const pageParamsData = useRef<pageType>({
     current: 1,
-    pageSize: 8,
+    pageSize: 20,
     total: 0,
   });
   const currentSelect = useRef({
@@ -85,6 +85,7 @@ const App: React.FC = () => {
     Home.getFavourites(params)
       .then((res: any) => {
         let array = res?.data?.list || [];
+        
         setLikedHistory(array);
         pageParamsData.current.total = res?.data?.total || 0;
       })
@@ -235,6 +236,7 @@ const App: React.FC = () => {
                     key={index}
                     cardData={item}
                     styleClass="homeRightContentCard"
+                    isDelete={currentSelect.current.type == LookType.history}
                     callBack={(type: OperateType, data: any) =>
                       likeOperateFunc(type, data, index)
                     }

@@ -2,6 +2,7 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import { history, Outlet } from "umi";
 import classNames from "classnames";
+import { ArrowLeftOutlined } from "@ant-design/icons";
 import styles from "./index.less";
 
 export default function UserPage() {
@@ -19,6 +20,9 @@ export default function UserPage() {
   return (
     <div className={styles.userPage}>
       <div className={styles.userPageLeft}>
+        <div className={styles.userPageLeftTitle} onClick={() => history.replace("/")}>
+          <ArrowLeftOutlined /> Go Back
+        </div>
         <div className={styles.userPageLeftContent}>
           {leftRoute.map((item: any, index: number) => {
             return (

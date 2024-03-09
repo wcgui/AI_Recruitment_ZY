@@ -1,5 +1,5 @@
-import React from "react";
-import { Rate } from "antd";
+import React, { useState } from "react";
+import { Button, Rate, Modal, Form, Radio, Space } from "antd";
 import styles from "./index.less";
 import className from "classnames";
 import * as Home from "@/api/home";
@@ -16,13 +16,63 @@ export enum OperateType {
 const LikeIcon = require("@/assets/like.png");
 const UnLikeIcon = require("@/assets/group79.png");
 const DeleteIcon = require("@/assets/group80.png");
-
+const DefaultBoxHeight = 150; //容器默认高度
+const ConfigQuestionOptions = [
+  {
+    label: "I'm not interested in this company",
+    value: "UNLIKE_REASON_00001",
+  },
+  {
+    label: "I'm not interested in this job title",
+    value: "UNLIKE_REASON_00002",
+  },
+  {
+    label: "I think the requirements don't match my skillset",
+    value: "UNLIKE_REASON_00003",
+  },
+  {
+    label: "I think it's irrelevant to my search",
+    value: "UNLIKE_REASON_00004",
+  },
+  {
+    label: "I already applied",
+    value: "UNLIKE_REASON_00005",
+  },
+  {
+    label: "Other",
+    value: "UNLIKE_REASON_00006",
+  },
+];
 type Props = {
   cardData: any;
   [key: string]: any;
 };
 const JobCard: React.FC<Props> = (prop) => {
-  let { cardData = {} } = prop;
+  const [open, setOpen] = useState(false);
+  const [formData, setFormData] = useState<any>({});
+  let { cardData = {}, isDelete = true } = prop;
+  const hideModal = () => {
+    setOpen(false);
+  };
+  const submitModal = async () => {
+    if (formData.reasonCode) {
+      let params = {
+        taskId: cardData.taskId,
+        jobId: cardData.jobId,
+        ...formData,
+      },
+      reqFun = Home.unLikeJob;
+
+      if (reqFun) {
+        const res = await reqFun(params);
+      }
+      hideModal();
+      prop.callBack && prop.callBack(OperateType.delete);
+    }
+  };
+  const radioChange = (e: any) => {
+    setFormData({ ...formData, reasonCode: e?.target?.value });
+  }
   //操作
   const operateFun = async (type: OperateType) => {
     let reqFunc = null,
@@ -38,7 +88,9 @@ const JobCard: React.FC<Props> = (prop) => {
     } else if (type == OperateType.details) {
       reqFunc = Home.getJobDetail;
     } else if (type == OperateType.delete) {
+      setOpen(true);
       reqFunc = Home.unLikeJob;
+      return;
     }
     if (reqFunc) {
       const res = await reqFunc(params);
@@ -48,39 +100,67 @@ const JobCard: React.FC<Props> = (prop) => {
     prop.callBack && prop.callBack(type, data || {});
   };
   const showOptions = [
-    {
-      key: "companyName",
-      label: "Company",
-    },
-    {
-      key: "location",
-      label: "Location",
-    },
-    {
-      key: "jobTitle",
-      label: "Job title",
-    },
-    {
-      key: "jobPostTime",
-      label: "Post time",
-      customValue: (value: any, item?: any) => {
-        return Utils.formatUtcString(value);
+    [
+      {
+        key: "companyName",
+        label: "Company",
       },
-    },
-  ];
-  const showRightOptions = [
-    {
-      key: "additionalProp1",
-      label: "Requirement satisfaction",
-    },
-    {
-      key: "additionalProp2",
-      label: "Preferred experiences",
-    },
-    {
-      key: "additionalProp3",
-      label: "Experience relevance",
-    },
+      {
+        key: "location",
+        label: "Location",
+      },
+      {
+        key: "experienceLevel",
+        label: "Experience Level",
+      },
+      {
+        key: "jobPostTime",
+        label: "Post time",
+        customValue: (value: any, item?: any) => {
+          return Utils.formatUtcString(value);
+        },
+      },
+    ],
+    [
+      {
+        key: "salary",
+        label: "Salary",
+        styleClass: "ellipsis-multiline2",
+      },
+      {
+        key: "jobType",
+        label: "",
+        styleClass: "ellipsis-multiline2",
+        isNoDefault: true,//是否不展示默认值
+      },
+      {
+        key: "remoteStatus",
+        label: "",
+        styleClass: "ellipsis-multiline2",
+        isNoDefault: true,//是否不展示默认值
+      },
+    ],
+    [
+      {
+        key: "companySummary",
+        label: "Company Info",
+        styleClass: "ellipsis-multiline3",
+      },
+      {
+        key: "top3SkillsTitle",
+        label: "Job Core skills",
+        styleClass: "ellipsis-multiline3",
+        customValue: (value: any, item?: any) => {
+          return value?.map((val: any, key: any) => {
+            return (
+              <div key={key}>
+                {key+1}. {val}
+              </div>
+            );
+          });
+        },
+      },
+    ],
   ];
 
   return (
@@ -92,29 +172,41 @@ const JobCard: React.FC<Props> = (prop) => {
         {cardData.jobTitle}
       </div>
       <div className={className(styles.JobCardContent)}>
-        <div className={styles.JobCardContentLeft}>
-          {showOptions?.map((item, key) => {
-            return (
-              <div className={styles.JobCardContentLeftContent} key={key}>
-                <div className={styles.JobCardContentLeftContentLabel}>
-                  {item.label}:
-                </div>
-                <div
-                  className={className(
-                    "overflow",
-                    styles.JobCardContentLeftContentLabelContent
-                  )}
-                  title={cardData[item.key]}
-                >
-                  {(item.customValue && item.customValue(cardData[item.key])) ||
-                    cardData[item.key] ||
-                    "--"}
-                </div>
-              </div>
-            );
-          })}
-        </div>
-        <div className={styles.JobCardContentRight}>
+      {
+        showOptions?.map((value, valueKey) => {
+        return (
+          <div className={styles.JobCardContentLeft} style={{width: 100/showOptions?.length + "%"}} key={valueKey}>
+            {
+              value?.map((item: any, key) => {
+                return (
+                  <div className={styles.JobCardContentLeftContent} style={{height: DefaultBoxHeight/value?.length + "px"}} key={key}>
+                    {
+                      item.label && <div className={styles.JobCardContentLeftContentLabel}>
+                        {item.label}:
+                      </div>
+                    }
+                    <div
+                      className={className(
+                        item.styleClass || "overflow",
+                        styles.JobCardContentLeftContentLabelContent
+                      )}
+                      title={(item.customValue && item.customValue(cardData[item.key])) ||
+                        cardData[item.key]}
+                    >
+                      {(item.customValue && item.customValue(cardData[item.key])) ||
+                        cardData[item.key] ||
+                        (!item.isNoDefault && "-")
+                      }
+                    </div>
+                  </div>
+                );
+              })
+            }
+          </div>
+        );
+        })
+      }
+        {/* <div className={styles.JobCardContentRight}>
           {showRightOptions?.map((item, key) => {
             return (
               <div className={styles.JobCardContentRightContent} key={key}>
@@ -134,28 +226,60 @@ const JobCard: React.FC<Props> = (prop) => {
               </div>
             );
           })}
-        </div>
+        </div> */}
       </div>
       <div className={className(styles.JobCardBottom)}>
+        <div className={className(styles.JobCardBottomRight, "overflow")} title={ cardData?.industries?.join(",")}>
+          {
+            cardData?.industries?.join(",")
+          }
+        </div>
         <div className={styles.JobCardBottomLeft}>
+          {
+            isDelete && <img
+              src={DeleteIcon}
+              onClick={() => operateFun(OperateType.delete)}
+            />
+            }
           <img
             src={cardData.like ? LikeIcon : UnLikeIcon}
             onClick={() =>
               operateFun(cardData.like ? OperateType.unlike : OperateType.like)
             }
           />
-          <img
-            src={DeleteIcon}
-            onClick={() => operateFun(OperateType.delete)}
-          />
-        </div>
-        <div
-          className={styles.JobCardBottomRight}
-          onClick={() => operateFun(OperateType.details)}
-        >
-          Detailed JD
+          <Button
+            type="primary"
+            onClick={() => operateFun(OperateType.details)}
+          >
+            View details
+          </Button>
         </div>
       </div>
+      <Modal
+        title="Tell us a little more"
+        open={open}
+        onOk={submitModal}
+        onCancel={hideModal}
+        okText="Submit"
+        cancelText="Cancel"
+        width={"50%"}
+      >
+        <Form.Item
+            name="reasonCode"
+            label=""
+          >
+            <div>Letting us know why you're not interested helps us fine-tuneyour future recommendations.</div>
+            <Radio.Group value={formData.reasonCode}>
+              <Space direction="vertical">
+                {
+                  ConfigQuestionOptions.map((item: any, key) => {
+                    return (<Radio key={key} value={item.value} onChange={radioChange}>{item.label}</Radio>);
+                  })
+                }
+              </Space>
+            </Radio.Group>
+          </Form.Item>
+      </Modal>
       {prop.children}
     </div>
   );

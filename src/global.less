@@ -262,6 +262,19 @@ td {
   text-overflow: ellipsis;
 }
 
+.loop(@i: 1) when (@i <= 10)  {
+  .ellipsis-multiline@{i}{
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: @i; /* 定义文本的最大显示行数 */
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .loop(@i + 1);
+}
+
+.loop();
+
 /*滚动条整体部分*/
 * ::-webkit-scrollbar {
   width: 10px;

@@ -2,8 +2,8 @@
   border: 1px solid #E7EAEE;
   padding: 15px;
   border-radius: 3px;
+  box-sizing: border-box;
   width: 358px;
-  height: 265px;
 
   .JobCardHeader {
     padding: 0 10px;
@@ -17,11 +17,7 @@
   }
 
   .JobCardContent {
-    padding: 10px 0px;
-    border-bottom: 1px solid #E7EAEE;
-    height: 158px;
-    display: flex;
-    align-items: center;
+    margin: 10px 0px;
     &::after {
       clear: both;
       content: "";
@@ -29,11 +25,14 @@
     }
 
     .JobCardContentLeft {
-      width: 45%;
+      width: 30%;
       float: left;
+      box-sizing: border-box;
+      padding-right: 10px;
+
       .JobCardContentLeftContent {
         color: #000;
-        margin-bottom: 5px;
+        padding-bottom: 10px;
         .JobCardContentLeftContentLabel {
           font-size: 12px;
           color: rgba(0,0,0,.4);
@@ -45,9 +44,8 @@
       }
     }
     .JobCardContentRight {
-      width: 55%;
+      width: 40%;
       float: left;
-      background: #FBFBFB;
       padding: 12px;
       border-radius: 6px;
 
@@ -59,30 +57,28 @@
     }
   }
   .JobCardBottom {
-    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #E7EAEE;
     display: flex;
     justify-content: space-between;
     .JobCardBottomLeft {
       img {
         cursor: pointer;
         width: 32px;
+        margin-right: 10px;
+      }
 
-        &:last-child {
-          margin-left: 10px;
-        }
+      button {
+        margin-left: 20px;
       }
     }
 
     .JobCardBottomRight {
-      background: #2B67FF;
-      border-radius: 8px;
-      width: 111px;
-      text-align: center;
-      color: #fff;
+      text-align: left;
       font-size: 14px;
-      font-weight: 700;
       line-height: 30px;
       cursor: pointer;
+      max-width: 50%;
     }
   }
 }

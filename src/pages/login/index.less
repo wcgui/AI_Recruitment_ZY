@@ -20,13 +20,73 @@
       bottom: 80px;
       left: 55%;
     }
+
+    .loginLeftContentBottom {
+      width: 271px;
+      font-size: 18px;
+      height: 45px;
+      line-height: 45px;
+      text-align: center;
+      background: #000;
+      color: #fff;
+      border-radius: 8px;
+      cursor: pointer;
+      position: absolute;
+      bottom: 20px;
+    }
+  }
+
+  .loginSteps {
+    padding-bottom: 20px;
+    .loginStepsBox {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      .loginStepsLeft {
+        width: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        img {
+          max-height: 200px;
+          // width: 258px;
+        }
+
+        .loginStepsLeftContent {
+          text-align: left;
+          font-size: 32px;
+          line-height: 44px;
+          background: #ECF2FF;
+          padding: 40px;
+          >div:first-child {
+            color: #2B67FF;
+            font-weight: 700;
+          }
+        }
+      }
+    }
+
+    .loginStepsBottom {
+      margin: 20px auto 0;
+      width: 411px;
+      height: 52px;
+      border-radius: 8px;
+      cursor: pointer;
+      background: #2B67FF;
+      color: #fff;
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 52px;
+      text-align: center;
+    }
   }
 
   .loginLeft {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 60%;
+    width: 50%;
     background-color: #ECF2FF;
 
     .loginLeftContent {
@@ -68,7 +128,7 @@
   }
   
   .loginRight{
-    width: 40%;
+    width: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
