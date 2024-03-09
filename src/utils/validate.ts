@@ -26,7 +26,7 @@ export function validateURL(textval: string) {
  * @param {*} s
  */
 export function isEmail(s: string) {
-  return /^(.[a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((.[a-zA-Z0-9_-]{2,3}){1,2})$/.test(
+  return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(
     s
   );
 }
