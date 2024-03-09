@@ -17,6 +17,7 @@ import {
   Select,
   DatePicker,
 } from "antd";
+import "./index.less"
 
 const { Option } = Select;
 
@@ -26,7 +27,7 @@ type FieldType = {
 enum FormItemType {
   Text = "Text",
   Selector = "Selector",
-  DataPicker = "DataPicker",
+  DatePicker = "DatePicker",
   TextArea = "TextArea",
 }
 const App: React.FC<{
@@ -56,7 +57,7 @@ const App: React.FC<{
     },
   }));
   return (
-    <Form ref={formRef} form={form} name="formBasic" scrollToFirstError>
+    <Form className="form-item-box" ref={formRef} form={form} name="formBasic" scrollToFirstError>
       {options?.map((item: any, key: number) => {
         return (
           <Form.Item
@@ -84,6 +85,7 @@ const App: React.FC<{
               <Select
                 placeholder={item.placeHolder}
                 value={formData.current[item.questionKey]}
+                mode={item?.params?.multiple ? "multiple" : "default"}
                 {...item.params}
                 onChange={(e) => handleChange(item.questionKey, e)}
               >
@@ -94,7 +96,7 @@ const App: React.FC<{
                 ))}
               </Select>
             )}
-            {item.input == FormItemType.DataPicker && (
+            {item.input == FormItemType.DatePicker && (
               <DatePicker
                 placeholder={item.placeHolder}
                 value={formData.current[item.questionKey]}
