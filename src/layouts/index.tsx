@@ -27,7 +27,7 @@ export default function Layout() {
       <HeaderComponent title="Saladjobs" logoClick={() => history.replace("/")}>
         <Dropdown menu={{ items: dopdownData, onClick: dropClick }}>
           <Space>
-            {"Hi" + usersInfo.userInfo.email}
+            {"Hi " + usersInfo.userInfo.email}
             <DownOutlined />
           </Space>
         </Dropdown>
