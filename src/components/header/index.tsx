@@ -10,7 +10,7 @@ type Props = {
   [key: string]: any;
 };
 const Header: React.FC<Props> = ({
-  title = "App name",
+  title = "Saladjobs",
   imgUrl = defaultPng,
   border = true,
   styleClass,

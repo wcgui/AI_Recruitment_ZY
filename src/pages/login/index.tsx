@@ -82,7 +82,7 @@ const App: React.FC = () => {
             autoComplete="off"
             form={form}
           >
-            <Form.Item label="email">
+            <Form.Item label="Email">
               <Form.Item<FieldType>
                 name="email"
                 noStyle
